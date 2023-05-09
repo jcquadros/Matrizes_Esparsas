@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int VECTOR_CAPACITY = 10;
+//static int VECTOR_CAPACITY = 10;
 static int VECTOR_GROWTH_RATE = 2;
 
-Vector *vector_construct() {
+Vector *vector_construct(int initial_capacity) {
   Vector *v = (Vector *)calloc(1, sizeof(Vector));
-  v->data = (vector_type*)calloc(VECTOR_CAPACITY, sizeof(vector_type));
-  v->allocated = VECTOR_CAPACITY;
+  v->data = (vector_type*)calloc(initial_capacity, sizeof(vector_type));
+  v->allocated = initial_capacity;
   return v;
 }
 
@@ -23,10 +23,12 @@ void vector_push_back(Vector *v, vector_type val) {
 }
 
 vector_type vector_get(Vector *v, int i) {
-  if (i >= v->size || i < 0) {
-    printf("Erro: acesso indevido na posicao %d do vetor de tamanho %d\n", i,
-           v->size);
-    exit(1);
+  if(i > vector_size(v)){
+    return NULL;
+  }
+  if(i < 0){
+    printf("vector_get: invalid i\n");
+    exit (1);
   }
   return v->data[i];
 }
@@ -71,12 +73,6 @@ vector_type vector_pop_front(Vector *v) { return vector_remove(v, 0); }
 vector_type vector_pop_back(Vector *v) { return vector_remove(v, v->size - 1); }
 
 void vector_insert(Vector *v, int i, vector_type val) {
-  if (i >= v->size || i < 0) {
-    printf("Erro: falha ao tentar inserir um valor na posicao %d do vetor "
-           "de tamanho %d\n",
-           i, v->size);
-    exit(1);
-  }
   if (v->size == v->allocated) {
     v->allocated *= VECTOR_GROWTH_RATE;
     v->data = realloc(v->data, v->allocated * sizeof(vector_type));

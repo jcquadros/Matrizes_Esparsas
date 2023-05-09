@@ -3,8 +3,6 @@
 #include "cell.h"
 #include "vector.h"
 
-typedef float cell_type;
-
 typedef struct{
     int rows;
     int cols;
@@ -14,9 +12,10 @@ typedef struct{
 } SparseMatrix;
 
 SparseMatrix *sparse_matrix_construct(int rows, int cols);
-void sparce_matrix_set(SparseMatrix *matrix, int row, int col, cell_type value); 
+void sparse_matrix_set(SparseMatrix *matrix, int row, int col, cell_type value); 
 cell_type *sparse_matrix_get_value(SparseMatrix *matrix, int row, int col);
 Cell *sparse_matrix_get_cell(SparseMatrix *matrix, int row, int col);
-void sparse_matrix_destruct(SparseMatrix *matrix);
+void sparse_matrix_destroy(SparseMatrix *matrix);
+void sparse_matrix_print(SparseMatrix * matrix);
 
 #endif
