@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-//static int VECTOR_CAPACITY = 10;
+static int VECTOR_CAPACITY = 10;
 static int VECTOR_GROWTH_RATE = 2;
 
-Vector *vector_construct(int initial_capacity) {
+Vector *vector_construct() {
   Vector *v = (Vector *)calloc(1, sizeof(Vector));
-  v->data = (vector_type*)calloc(initial_capacity, sizeof(vector_type));
-  v->allocated = initial_capacity;
+  v->data = (vector_type*)calloc(VECTOR_CAPACITY, sizeof(vector_type));
+  v->allocated = VECTOR_CAPACITY;
   return v;
 }
 
