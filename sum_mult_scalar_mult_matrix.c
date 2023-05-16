@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "sparse_matrix.h"
+#include "libs/sparse_matrix.h"
 
 int main() {
   SparseMatrix *m1 = sparse_matrix_construct(3, 4);
@@ -49,3 +49,32 @@ int main() {
 
   return 0;
 }
+/*
+Saida esperada:
+
+Matriz 1:
+0.00    2.00    0.00    0.00 
+0.00    0.00    4.00    0.00 
+0.00    0.00    0.00    6.00 
+Matriz 2:
+0.00    1.00    0.00    0.00 
+0.00    0.00    2.00    0.00 
+0.00    0.00    0.00    3.00 
+Matriz 3:
+1.00    2.00 
+3.00    4.00 
+5.00    6.00 
+7.00    8.00 
+Soma de matriz 1 com matriz 2:
+0.00    3.00    0.00    0.00 
+0.00    0.00    6.00    0.00 
+0.00    0.00    0.00    9.00 
+Multiplicação da matriz 1 por 2.0:
+0.00    4.00    0.00    0.00 
+0.00    0.00    8.00    0.00 
+0.00    0.00    0.00    12.00 
+Multiplicação da matriz 1 por matriz 3:
+6.00    8.00
+20.00   24.00
+42.00   48.00
+*/

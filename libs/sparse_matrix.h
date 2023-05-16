@@ -26,8 +26,8 @@ SparseMatrix *sparse_matrix_mult_point_by_point(SparseMatrix *m1,
 SparseMatrix *sparse_matrix_transpose(SparseMatrix *m);
 SparseMatrix *sparse_matrix_swap_col(SparseMatrix *m, int col_1, int col_2);
 SparseMatrix *sparse_matrix_swap_line(SparseMatrix *m, int line_1, int line_2);
-SparseMatrix *sparse_matrix_slice(SparseMatrix *m, int col_left, int line_up,
-                                  int col_right, int line_down);
+SparseMatrix *sparse_matrix_slice(SparseMatrix *m, int line_up, int col_left, 
+                                  int line_down, int col_right);
 void sparse_matrix_print_sparse_form(SparseMatrix *m);
 void sparse_matrix_write_bin(SparseMatrix *m, char * dir);
 SparseMatrix *sparse_matrix_read_bin(char *dir);

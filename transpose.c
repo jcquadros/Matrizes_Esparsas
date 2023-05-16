@@ -1,4 +1,4 @@
-#include "sparse_matrix.h"
+#include "libs/sparse_matrix.h"
 #include <stdio.h>
 
 int main() {
@@ -8,6 +8,7 @@ int main() {
   sparse_matrix_set(m, 1, 1, 3);
   sparse_matrix_set(m, 2, 0, 4);
   sparse_matrix_set(m, 2, 2, 5);
+  sparse_matrix_set(m, 1, 2, 6);
 
   printf("Matriz original:\n");
   sparse_matrix_print(m);
@@ -25,14 +26,14 @@ int main() {
 /*
 Saida esperada:
 
-  Matriz original:
-  1 0 2
-  0 3 0
-  4 0 5
+Matriz original:
+1.00    0.00    2.00 
+0.00    3.00    6.00
+4.00    0.00    5.00
 
-  Matriz transposta:
-  1 0 4
-  0 3 0
-  2 0 5
+Matriz transposta:
+1.00    0.00    4.00
+0.00    3.00    0.00
+2.00    6.00    5.00
 
 */

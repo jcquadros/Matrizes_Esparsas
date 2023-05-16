@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "sparse_matrix.h": "c"
+        "sparse_matrix.h": "c",
+        "stdio.h": "c"
     }
 }

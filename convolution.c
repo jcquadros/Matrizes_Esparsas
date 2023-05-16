@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "sparse_matrix.h"
+#include "libs/sparse_matrix.h"
 
 int main() {
   SparseMatrix *matrix = sparse_matrix_construct(5, 5);
@@ -15,9 +15,6 @@ int main() {
   sparse_matrix_set(kernel, 0, 0, 1);
   sparse_matrix_set(kernel, 0, 1, 2);
   sparse_matrix_set(kernel, 0, 2, 1);
-  sparse_matrix_set(kernel, 1, 0, 0);
-  sparse_matrix_set(kernel, 1, 1, 0);
-  sparse_matrix_set(kernel, 1, 2, 0);
   sparse_matrix_set(kernel, 2, 0, -1);
   sparse_matrix_set(kernel, 2, 1, -2);
   sparse_matrix_set(kernel, 2, 2, -1);
@@ -37,3 +34,25 @@ int main() {
 
   return 0;
 }
+
+/*
+Saida esperada:
+Matriz de entrada:
+0.00    1.00    0.00    1.00    0.00
+0.00    0.00    1.00    0.00    0.00
+0.00    1.00    0.00    0.00    0.00
+0.00    0.00    0.00    1.00    0.00
+0.00    0.00    1.00    0.00    0.00
+
+Kernel:
+1.00    2.00    1.00
+0.00    0.00    0.00
+-1.00   -2.00   -1.00
+
+Matriz de saída:
+0.00    -1.00   -2.00   -1.00   0.00
+0.00    0.00    1.00    2.00    1.00
+0.00    1.00    1.00    -1.00   -1.00
+1.00    1.00    -1.00   -1.00   0.00
+0.00    0.00    1.00    2.00    1.00
+*/
