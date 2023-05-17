@@ -3,7 +3,7 @@
 
 int main() {
   SparseMatrix *matrix = sparse_matrix_construct(5, 5);
-  SparseMatrix *kernel = sparse_matrix_construct(3, 3);
+  SparseMatrix *kernel = sparse_matrix_construct(5, 3);
 
   sparse_matrix_set(matrix, 0, 1, 1);
   sparse_matrix_set(matrix, 0, 3, 1);
@@ -18,6 +18,7 @@ int main() {
   sparse_matrix_set(kernel, 2, 0, -1);
   sparse_matrix_set(kernel, 2, 1, -2);
   sparse_matrix_set(kernel, 2, 2, -1);
+  sparse_matrix_set(kernel, 4, 2, 10);
 
   SparseMatrix *out_matrix = sparse_matrix_convolution(matrix, kernel);
 

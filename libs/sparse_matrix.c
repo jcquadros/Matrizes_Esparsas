@@ -619,7 +619,7 @@ SparseMatrix *sparse_matrix_convolution(SparseMatrix *matrix,
     printf("Erro, uma das matrizes é invalida");
     return NULL;
   }
-  if (kernel->num_lines != kernel->num_columns || kernel->num_lines % 2 == 0 ||
+  if (kernel->num_lines % 2 == 0 ||
       kernel->num_columns % 2 == 0)
   {
     printf("Tamanho do kernel invalido. Nao eh uma matriz quadrada ou nao "
