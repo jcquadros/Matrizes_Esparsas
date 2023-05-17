@@ -9,7 +9,7 @@ int main()
   sparse_matrix_set(m, 2, 2, 3);
   sparse_matrix_set(m, 1, 2, 4);
   sparse_matrix_set(m, 2, 0, 5);
-  sparse_matrix_print(m);
+
   char *dir = "matriz.bin";
   sparse_matrix_write_bin(m, dir);
   SparseMatrix *m_read = sparse_matrix_read_bin(dir);
@@ -26,14 +26,15 @@ int main()
 }
 /*
 Saida esperada:
-  Matriz original:
-  |1.0000 0.0000 0.0000|
-  |0.0000 2.0000 4.0000|
-  |5.0000 0.0000 3.0000|
 
-  Matriz lida do arquivo:
-  |1.0000 0.0000 0.0000|
-  |0.0000 2.0000 4.0000|
-  |5.0000 0.0000 3.0000|
+Matriz original:
+1.00    0.00    0.00 
+0.00    2.00    4.00 
+5.00    0.00    3.00 
+
+Matriz lida do arquivo:
+1.00    0.00    0.00 
+0.00    2.00    4.00 
+5.00    0.00    3.00 
 
 */
