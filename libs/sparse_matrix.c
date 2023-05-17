@@ -2,7 +2,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// O(1)
+// defina como C o numero de colunas da matriz
+// defina como L o numero de linhas da matriz
+// defina como nl o numero de nao nulos da linha
+// defina como nc o numero de nao nulos da coluna
+// defina como s o custo da funcao sparse_matriz_set()
+// defina como g o custo da funcao sparse_matriz_get()
+
+
+/*
+  O(1)
+  Sempre será constante
+*/
 SparseMatrix *sparse_matrix_construct(int l, int c)
 {
   SparseMatrix *m = (SparseMatrix *)calloc(1, sizeof(SparseMatrix));
@@ -14,7 +25,12 @@ SparseMatrix *sparse_matrix_construct(int l, int c)
   return m;
 }
 
-// O(m) elementos nao nulos das linhas e elementos nao nulos das colunas
+/*
+  O(nl + nc)
+  A funcao percorre, no primeiro while, sobre os nao nulos de uma linha e depois, no segundo while,
+  sobre os nao nulos da coluna e a partir daí tem só o custo das funcoes auxiliares chamadas que é 
+  tempo constante.
+*/
 void sparse_matrix_set(SparseMatrix *m, int l, int c, data_type value)
 {
   if (l >= m->num_lines || c >= m->num_columns || l < 0 || c < 0)
@@ -70,7 +86,11 @@ void sparse_matrix_set(SparseMatrix *m, int l, int c, data_type value)
     printf("Nada a ser adicionado\n");
   }
 }
-// O(n) nao nulos da linha
+
+/*
+  O(nl) 
+  Percorre só sobre os nao nulos de uma linha até que encontre o nó desejado
+*/
 data_type sparse_matrix_get(SparseMatrix *matrix, int l, int c)
 {
   if (l >= matrix->num_lines || c >= matrix->num_columns || l < 0 || c < 0)
@@ -96,8 +116,11 @@ data_type sparse_matrix_get(SparseMatrix *matrix, int l, int c)
   }
 }
 
-// O(n * m) numero de linhas + numero elementos nao nulos * ordem da função de
-// setar a matriz
+/*
+  O(L * nl * s)
+  Percorre sobre todas as linhas (L) e os nao nulos de cada linha (nl) * o custo 
+  da funcao de inserir elementos na matriz (s)  
+*/
 SparseMatrix *sparse_matrix_swap_col(SparseMatrix *m, int col_1, int col_2)
 {
   if (!m)
@@ -134,8 +157,11 @@ SparseMatrix *sparse_matrix_swap_col(SparseMatrix *m, int col_1, int col_2)
   return m_out;
 }
 
-// O(n * m) numero de linhas + numero elementos nao nulos * ordem da função de
-// setar a matriz
+/*
+  O(L * nl * s)
+  Percorre sobre todas as linhas (L) e os nao nulos de cada linha (nl) * o custo 
+  da funcao de inserir elementos na matriz (s)  
+*/
 SparseMatrix *sparse_matrix_swap_line(SparseMatrix *m, int line_1, int line_2)
 {
   if (!m)
@@ -174,9 +200,12 @@ SparseMatrix *sparse_matrix_swap_line(SparseMatrix *m, int line_1, int line_2)
   return m_out;
 }
 
-// O(n * m) numero de elementos nao nulos dentro do intervalo de linhas
-// percorrido + o intervalo de linhas percorrido * a ordem da funcao de setar
-// matriz
+/*
+  O(I * nl * s)
+  (for) Percorre sobre um intervalo de linhas (I) que é o tamanho da matriz a ser gerada
+  e a cada iteracao (while) percorre entre os elementos nao nulos da linha (nl) e o custo da funcao 
+  de inserir elementos na matriz (s)
+*/
 SparseMatrix *sparse_matrix_slice(SparseMatrix *m, int line_up, int col_left, 
                                   int line_down, int col_right)
 {
@@ -217,7 +246,10 @@ SparseMatrix *sparse_matrix_slice(SparseMatrix *m, int line_up, int col_left,
   return m_out;
 }
 
-// O(n^2)
+/*
+  O(L * C)
+  Percorre entre todas as linhas (L) e colunas da matriz (C)
+*/
 void sparse_matrix_print(SparseMatrix *matrix)
 {
   if (!matrix)
@@ -243,7 +275,11 @@ void sparse_matrix_print(SparseMatrix *matrix)
   }
 }
 
-// O(n * m) nao nulos das duas matrizes + numero de linhas * ordem da funcao de setar a matriz
+/*
+  O(L * nl * s)
+  Percorre sobre todas as linhas de m1 e m2 (L) e sobre os nao nulos de cada linha de 
+  m1 e m2 (nl) e o custo da funcao de inserir elementos na matriz (s)
+*/
 SparseMatrix *sparse_matrix_sum(SparseMatrix *m1, SparseMatrix *m2)
 {
   if (m1->num_lines != m2->num_lines || m1->num_columns != m2->num_columns)
@@ -301,7 +337,11 @@ SparseMatrix *sparse_matrix_sum(SparseMatrix *m1, SparseMatrix *m2)
   return m_sum;
 }
 
-// O(n * m) = n nao nulos da matriz + numero de linhas * ordem da funcao de setar matrizes
+/*
+  O(L * nl * s)
+  Percorre sobre todas as linhas (L) e os nao nulos de cada linha (nl) e o custo
+  da funcao de inserir elementos (s)
+*/
 SparseMatrix *sparse_matrix_mult_by_scalar(SparseMatrix *matrix,
                                            data_type num)
 {
@@ -328,8 +368,13 @@ SparseMatrix *sparse_matrix_mult_by_scalar(SparseMatrix *matrix,
   return matrix_mult;
 }
 
-// O(n^3) = tem tres loops dos quais  um itera sobre os elementos nao nulos da
-// matrix
+/*  
+  O(L * C * (nl+nc) * s)
+  Dois primeiros "for": Percorre entre as linhas (L) e colunas (C);
+  O while: percorre entre os nao nulos de uma linha (nl) e de uma coluna (nc);
+  Em algumas iteracoes existe o custo adicional da funcao de inserir elementos na
+  matriz (s) 
+*/
 SparseMatrix *sparse_matrix_mult_matrix_by_matrix(SparseMatrix *m1,
                                                   SparseMatrix *m2)
 {
@@ -384,7 +429,12 @@ SparseMatrix *sparse_matrix_mult_matrix_by_matrix(SparseMatrix *m1,
   return matrix_mult;
 }
 
-// O(n * m) = numero de elementos nao nulos da matriz + numero de linhas * ordem da funcao de setar
+/*
+  O(L * nl * s)
+  Percorre sobre as linhas (L) e os nao nulos de cada linha das duas matrizes m1 e m2 (nl)
+  e tem um custo adicinal da funcao de inserir elementos na matriz (s)
+
+*/
 SparseMatrix *sparse_matrix_mult_point_by_point(SparseMatrix *m1,
                                                 SparseMatrix *m2)
 {
@@ -432,7 +482,11 @@ SparseMatrix *sparse_matrix_mult_point_by_point(SparseMatrix *m1,
   return m_mult;
 }
 
-// O(n * m) numero de elementos nao nulos + o numero de linhas * funcao de setar a matriz
+/*
+  O(L *nl * s)
+  Percorre sobre as linhas da matriz (L) e sobre cada elemento nao nulo da linha (nl)
+  e tem o custo adicional da funcao de inserir elementos na matriz (s)
+*/
 SparseMatrix *sparse_matrix_transpose(SparseMatrix *m)
 {
   if (!m)
@@ -452,7 +506,10 @@ SparseMatrix *sparse_matrix_transpose(SparseMatrix *m)
   return m_t;
 }
 
-// O(n) numero de elementos nao nulos + o numero de linhas
+/*
+  O(L * nl)
+  percorre sobre todas as linhas (L) e os nao nulos de cada linha (nl)
+*/
 void sparse_matrix_print_sparse_form(SparseMatrix *m)
 {
   if (!m)
@@ -470,7 +527,10 @@ void sparse_matrix_print_sparse_form(SparseMatrix *m)
   }
 }
 
-// O(n) = numero de elementos nao nulos da matriz + numero de linhas
+/*
+  O(L * nl)
+  Percorre sobre todos as linhas (L) e os elementos nao nulos de cada linha (nl)
+*/
 void sparse_matrix_write_bin(SparseMatrix *m, char *dir)
 {
   FILE *f = fopen(dir, "wb");
@@ -497,7 +557,11 @@ void sparse_matrix_write_bin(SparseMatrix *m, char *dir)
   fclose(f);
 }
 
-// O(n) = numero de elementos nao nulos da matriz + numero de linhas
+/*
+  O(L * nl * s)
+  Percorre sobre todos as linhas (L) e os elementos nao nulos de cada linha (nl)
+  e o custo adicional da funcao de inserir elementos na matriz (s)
+*/
 SparseMatrix *sparse_matrix_read_bin(char *dir)
 {
   FILE *f = fopen(dir, "rb");
@@ -540,7 +604,13 @@ SparseMatrix *sparse_matrix_read_bin(char *dir)
   }
 }
 
-// O(n^4) = percorre toda a matriz principal O(n^2) * o kernel O(k^2)
+/*
+  O(L * C * kL * nkl * g * s)
+  Percorre sobre toda a matriz de entrada linhas (L) e colunas (C)
+  Para cada iteracao percorre tambem entre as linhas do kernel (kL) e os elementos 
+  nao nulos de cada linha kernel (nkl) e tem o custo da funcao get (g) e o  custo 
+  da funcao de inserir elementos na matriz (s)
+*/ 
 SparseMatrix *sparse_matrix_convolution(SparseMatrix *matrix,
                                         SparseMatrix *kernel)
 {
@@ -602,7 +672,10 @@ SparseMatrix *sparse_matrix_convolution(SparseMatrix *matrix,
   return out_matrix;
 }
 
-// O(n) = elementos nao nulos e linhas
+/*
+  O(L * nl)
+  Percorre entre as linhas da matriz (L) e os elementos nao nulos de cada linha (nl)
+*/
 void sparse_matrix_destruct(SparseMatrix *m)
 {
   if (!m)
